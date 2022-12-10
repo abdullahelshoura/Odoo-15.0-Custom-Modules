@@ -16,11 +16,24 @@ class HospitalPatient(models.Model):
     appointment_id = fields.Many2one('hospital.appointment', string='Appoimtents')
     image = fields.Image(string="Image")
     tag_ids = fields.Many2many('patient.tag', string="Tags")
+    appointment_count = fields.Integer(string='Appointment Count', compute='_compute_appointment_count', store='True')
+    appointment_ids = fields.One2many('hospital.appointment', 'patient_id', string='Appointments')
+    parent = fields.Char(string="Parent")
+    marital_status = fields.Selection([('married', 'Married'), ('single', 'Single')], string="Marital Status",
+                                      tracking=True)
+    partner_name = fields.Char(string="Parent Name")
+
+    @api.depends('appointment_ids')
+    def _compute_appointment_count(self):
+        for rec in self:
+            rec.appointment_count = self.env['hospital.appointment'].search_count([('patient_id', '=', rec.id)])
+
     @api.constrains('dob')
     def _check_dob(self):
         for rec in self:
             if rec.dob and rec.dob > fields.Date.today():
                 raise ValidationError(_("The entered date of birth is not acceptable !"))
+
     # inherit create method from hospital.patient model
     @api.model
     def create(self, vals):
@@ -47,4 +60,5 @@ class HospitalPatient(models.Model):
         # for record in self:
         #     name = record.ref + ' ' + record.name
         #     patient_list.append((record.id, name))
-        return [(record.id, "[%s] %s" % (record.ref, record.name)) for record in self] #the same previous function structure in one line
+        return [(record.id, "[%s] %s" % (record.ref, record.name)) for record in
+                self]  # the same previous function structure in one line

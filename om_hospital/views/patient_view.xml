@@ -4,7 +4,7 @@
         <field name="name">hospital.patient.tree</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree export_xlsx="0">
                 <field name="name" string="Patient Name"/>
                 <field name="ref" string="Reference"/>
                 <field name="age" string="Age"/>
@@ -28,6 +28,8 @@
                             <field name="dob"/>
                             <field name="age"/>
                             <field name="appointment_id"/>
+                            <field name="appointment_count"/>
+
 
                         </group>
                         <group>
@@ -35,6 +37,13 @@
                             <field name="ref"/>
                             <field name="active" invisible="1"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field' : 'color'}"/>
+                        </group>
+                    </group>
+                    <group string="Other Information" name="other_info">
+                        <group>
+                            <field name="parent" attrs="{'invisible': [('age', '>', 18), ('gender', '=', 'male')]}"/>
+                            <field name="marital_status"/>
+                            <field name="partner_name" readonly="1"/>
                         </group>
                     </group>
                 </sheet>
