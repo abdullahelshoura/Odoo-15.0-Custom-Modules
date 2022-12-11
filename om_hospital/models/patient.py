@@ -34,6 +34,12 @@ class HospitalPatient(models.Model):
             if rec.dob and rec.dob > fields.Date.today():
                 raise ValidationError(_("The entered date of birth is not acceptable !"))
 
+    @api.ondelete(at_uninstall=False)
+    def _check_appointments(self):
+        for rec in self:
+            if rec.appointment_ids:
+                raise ValidationError(_("You cannot delete a patient with appointments !"))
+
     # inherit create method from hospital.patient model
     @api.model
     def create(self, vals):

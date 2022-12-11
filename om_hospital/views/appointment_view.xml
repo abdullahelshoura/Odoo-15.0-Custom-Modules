@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!--        Tree View block-->
+    <!--        Activity View block-->
     <record model="ir.ui.view" id="appointment_view_activity">
         <field name="name">hospital.appointment.activity</field>
         <field name="model">hospital.appointment</field>
@@ -30,6 +30,9 @@
                   decoration-warning="state == 'in_consultation'"
                   decoration-danger="state == 'cancel'"
                   sample="1" multi_edit="1">
+                <header>
+                    <button name="action_in_consultation" string="In Consultation" type="object"/>
+                </header>
                 <!-- sample="1" attribute gives a background sample data when the tree is empty
                 multi_edit="1" attribute gives the ability to edit records in list view-->
                 <field name="seq" string="Sequence"/>
@@ -52,6 +55,15 @@
                        decoration-warning="state == 'in_consultation'"
                        decoration-danger="state == 'cancel'"
                        widget="badge"/>
+                <button name="action_done"
+                        class="fa fa-check btn-success"
+                        type="object"
+                        attrs="{'invisible':[('state', '!=', 'in_consultation')]}"/>
+                <button name="%(om_hospital.cancel_appointment_action_window)d"
+                        class="fa fa-times btn-danger"
+                        type="action" context="{'default_reason': 'write the reason','hide_appointment':1}"
+                        attrs="{'invisible':[('state', 'not in', ('in_consultation','draft'))]}"/>
+
             </tree>
         </field>
     </record>
