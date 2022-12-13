@@ -31,6 +31,7 @@
         'views/patient_tag_view.xml',
         'views/odoo_playground_view.xml',
         'wizard/cancel_appointment_wizard.xml',
+        'views/res_config_settings_views.xml',
 
         # '/home/abdullah/PycharmProjects/Odoo15/custom_addons/om_hospital/security/ir.model.access.csv',
     ],

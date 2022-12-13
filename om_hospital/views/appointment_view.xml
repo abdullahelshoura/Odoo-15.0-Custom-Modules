@@ -63,6 +63,10 @@
                         class="fa fa-times btn-danger"
                         type="action" context="{'default_reason': 'write the reason','hide_appointment':1}"
                         attrs="{'invisible':[('state', 'not in', ('in_consultation','draft'))]}"/>
+                <groupby name="patient_id">
+                    <button name="action_test" string="Click Me" type="object"/>
+                    <button name="action_edit" string="Edit" type="edit"/>
+                </groupby>
 
             </tree>
         </field>
@@ -104,7 +108,7 @@
                     <group>
                         <group>
                             <!-- default_focus attribute to set the mouse select the field by default -->
-                            <field name="patient_id" default_focus="1"/>
+                            <field name="patient_id" default_focus="1" widget="selection"/>
                             <field name="gender"/>
                             <field name="ref"/>
                             <field name="booking_date"/>

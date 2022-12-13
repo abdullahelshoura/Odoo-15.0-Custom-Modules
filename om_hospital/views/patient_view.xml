@@ -7,9 +7,12 @@
             <tree export_xlsx="0">
                 <field name="name" string="Patient Name"/>
                 <field name="ref" string="Reference"/>
-                <field name="age" string="Age"/>
-                <field name="tag_ids" widget="many2many_tags" string="Tags" options="{'color_field' : 'color'}"/>
+                <field name="age" string="Age" avg="Average Age"/>
+                <field name="appointment_count" sum="Total Appointment"/>
                 <field name="gender" string="Gender" invisible="context.get('hide_gender')"/>
+                <field name="tag_ids" widget="many2many_tags" string="Tags" options="{'color_field' : 'color'}"/>
+
+
             </tree>
         </field>
     </record>
@@ -42,16 +45,17 @@
 
                         </group>
                         <group>
-                            <field name="gender" invisible="context.get('hide_gender')"/>
+                            <field name="gender" invisible="context.get('hide_gender')" widget="radio"/>
                             <field name="active" invisible="1"/>
-                            <field name="tag_ids" widget="many2many_tags" options="{'color_field' : 'color'}"/>
+                            <field name="tag_ids" widget="many2many_checkboxes" options="{'color_field' : 'color'}"/>
                         </group>
                     </group>
                     <group string="Other Information" name="other_info">
                         <group>
                             <field name="parent" attrs="{'invisible': [('age', '>', 18), ('gender', '=', 'male')]}"/>
                             <field name="marital_status"/>
-                            <field name="partner_name" attrs="{'readonly': [('marital_status', '!=', 'married')],'required': [('marital_status', '=', 'married')]}"/>
+                            <field name="partner_name"
+                                   attrs="{'readonly': [('marital_status', '!=', 'married')],'required': [('marital_status', '=', 'married')]}"/>
                         </group>
                     </group>
                 </sheet>

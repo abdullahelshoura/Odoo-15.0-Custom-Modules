@@ -1,6 +1,7 @@
 from datetime import date
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+from dateutil import relativedelta
 
 
 class HospitalPatient(models.Model):
@@ -10,7 +11,8 @@ class HospitalPatient(models.Model):
     name = fields.Char(string='Name', tracking=True)
     ref = fields.Char(string='Reference', tracking=True)
     dob = fields.Date(string='Date Of Birth', tracking=True)
-    age = fields.Integer(string='Age', compute='_compute_age', tracking=True)
+    age = fields.Integer(string='Age', compute='_compute_age', inverse='_inverse_compute_age',
+                         search='_search_age', tracking=True)
     gender = fields.Selection([('male', 'Male'), ('female', 'Female')], string='Gender', tracking=True)
     active = fields.Boolean(default=True, string='Active')
     appointment_id = fields.Many2one('hospital.appointment', string='Appoimtents')
@@ -60,6 +62,16 @@ class HospitalPatient(models.Model):
                 rec.age = today.year - rec.dob.year
             else:
                 rec.age = 0
+    @api.depends('age')
+    def _inverse_compute_age(self):
+        today = date.today()
+        for rec in self:
+            rec.dob = today - relativedelta.relativedelta(years=rec.age)
+    def _search_age(self, operator, value):
+        dob = date.today() - relativedelta.relativedelta(years=value)
+        start_of_year = dob.replace(day=1,month=1)
+        end_of_year = dob.replace(day=31,month=12)
+        return [('dob', '>=', start_of_year), ('dob', '<=', end_of_year)]
 
     def name_get(self):
         # patient_list = []
@@ -68,3 +80,6 @@ class HospitalPatient(models.Model):
         #     patient_list.append((record.id, name))
         return [(record.id, "[%s] %s" % (record.ref, record.name)) for record in
                 self]  # the same previous function structure in one line
+    def action_test(self):
+        print("Clicked")
+        return
