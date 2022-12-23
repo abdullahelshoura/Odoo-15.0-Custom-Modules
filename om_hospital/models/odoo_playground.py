@@ -23,8 +23,8 @@ class OdooPlayGround(models.Model):
         try:
             if self.model_id:
                 model = self.env[self.model_id.model]
-            else :
+            else:
                 model = self
-            self.result = safe_eval(self.code.strip(),{'self': model})
+            self.result = safe_eval(self.code.strip(), {'self': model})
         except Exception as e :
             self.result = str(e)

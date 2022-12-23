@@ -30,11 +30,7 @@
             <menuitem name="Play Ground" id="menu_playground" action="action_playground"/>
         </menuitem>
 
-<!--        <menuitem name="Technical" id="main_menu_technical" >-->
-<!--            <menuitem name="Play Ground 0" id="main_menu_playground_0">-->
-<!--                 <menuitem name="Play Ground 1" id="main_menu_playground_1" action="action_playground"/>-->
-<!--            </menuitem>-->
-<!--        </menuitem>-->
+
     </data>
 
 </odoo>

@@ -112,6 +112,7 @@
                             <field name="gender"/>
                             <field name="ref"/>
                             <field name="booking_date"/>
+                            <field name="operation_id"/>
                         </group>
                         <group>
                             <!--groups="base.group_no_one" used to set object to be visible in only developer mode-->

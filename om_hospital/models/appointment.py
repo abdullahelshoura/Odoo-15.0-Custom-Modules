@@ -28,7 +28,7 @@ class HospitalAppointment(models.Model):
         ('done', 'Done'),
         ('cancel', 'Cancelled')], default='draft', string="Status", required=True)
     pharmacy_lines_ids = fields.One2many('appointment.pharmacy.lines', 'appointment_id', string="Pharmacy Lines")
-
+    operation_id = fields.Many2one('hospital.operation', string='Operation')
     @api.model
     def create(self, vals):
         vals['seq'] = self.env['ir.sequence'].next_by_code('hospital.appointment')

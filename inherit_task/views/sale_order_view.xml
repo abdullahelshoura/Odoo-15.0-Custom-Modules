@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <!-- explicit list view definition -->
+
+
+        <record model="ir.ui.view" id="view_order_line_tree_inherit">
+            <field name="name">sale.order.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"></field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
+                    <field name="margin"/>
+                    <field name="discount_amount"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

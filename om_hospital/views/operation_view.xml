@@ -1,0 +1,48 @@
+<odoo>
+    <!--    Tree View block-->
+    <record model="ir.ui.view" id="hospital_operation_tree">
+        <field name="name">hospital.operation.tree</field>
+        <field name="model">hospital.operation</field>
+        <field name="arch" type="xml">
+            <tree export_xlsx="0">
+                <field name="name"/>
+                <field name="doctor_id"/>
+
+            </tree>
+        </field>
+    </record>
+    <!--    Form Block -->
+    <record model="ir.ui.view" id="hospital_operation_form">
+        <field name="name">hospital.operation.form</field>
+        <field name="model">hospital.operation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+
+                        <group>
+                            <field name="name"/>
+                            <field name="doctor_id"/>
+                        </group>
+                        <group></group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="operation_action_window">
+        <field name="name">Operation</field>
+        <field name="res_model">hospital.operation</field>
+        <field name="context"></field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your First Doctor !
+            </p>
+        </field>
+    </record>
+    <data>
+        <menuitem name="Operations" id="menu_operation" sequence="3" parent="menu_configurations_master"
+                  action="operation_action_window"/>
+    </data>
+</odoo>
