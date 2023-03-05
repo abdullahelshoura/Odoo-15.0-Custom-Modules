@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_personal_info,personal.info,model_personal_info,base.group_user,1,1,1,1
+access_personal_tag,personal.tag,model_personal_tag,base.group_user,1,1,1,1
+access_person_depends,person.depends,model_person_depends,base.group_user,1,1,1,1
+access_cancel_journal_wizard,cancel.journal.wizard,model_cancel_journal_wizard,base.group_user,1,1,1,1

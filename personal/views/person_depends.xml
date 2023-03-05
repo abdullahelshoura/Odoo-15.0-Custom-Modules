@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+     <!--++++++++|Activity View|++++++++++++-->
+    <record model="ir.ui.view" id="personal_depends_activity">
+        <field name="name">person.depends.activity</field>
+        <field name="model">person.depends</field>
+        <field name="arch" type="xml">
+            <activity string="Dependencies">
+                <field name="person_id"/>
+                <field name="ref"/>
+                <templates>
+                    <div t-name="activity-box">
+                        <img t-att-src="activity_image('personal.info', 'image_1920', record.person_id.raw_value)" t-att-title="record.person_id.value" t-att-alt="record.person_id.value"/>
+                        <div>
+                            <field name="ref" display="full"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+    <!--++++++++| Personal Info Tree |++++++++++++-->
+    <record model="ir.ui.view" id="person_depends_tree">
+        <field name="name">person.depends.tree</field>
+        <field name="model">person.depends</field>
+        <field name="arch" type="xml">
+            <tree sample="1" multi_edit="1">
+                <field name="ref"/>
+                <field name="name"/>
+                <field name="age"/>
+                <field name="relationship"/>
+                <field name="person_id" widget="many2one_avatar"/>
+            </tree>
+        </field>
+    </record>
+    <!--    ================================================================-->
+    <!--++++++++| Personal Info From |++++++++++++-->
+    <record model="ir.ui.view" id="person_depends_form">
+        <field name="name">person.depends.form</field>
+        <field name="model">person.depends</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h4>
+                            <field name="ref" readonly="1"/>
+                        </h4>
+                        <h2>
+                            <label for="name" string="Name" class="oe_edit_only"/>
+                            <field name="name"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="age"/>
+                            <field name="relationship"/>
+                        </group>
+                        <group>
+                            <field name="person_id" widget="many2one_avatar"/>
+                            <field name="person_gender"/>
+                        </group>
+                    </group>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ================================================================-->
+    <!--    Search View (Control Panel)-->
+    <record model="ir.ui.view" id="person_depends_search">
+        <field name="name">person.depends.search</field>
+        <field name="model">person.depends</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Dependency Name"/>
+                <field name="age" string="Dependency Age"/>
+                <field name="relationship" string="Dependency Relationship"/>
+                <field name="person_id"/>
+            </search>
+        </field>
+    </record>
+
+    <!--    ================================================================-->
+    <!--***************|View Action|*******************-->
+    <record model="ir.actions.act_window" id="person_depends_action_window">
+        <field name="name">Dependency List</field>
+        <field name="res_model">person.depends</field>
+        <field name="view_mode">tree,form,search,activity</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your Dependency
+            </p>
+        </field>
+
+    </record>
+    <!--++++++++| Submenu |++++++++++++-->
+    <data>
+        <menuitem name="Dependency List" id="dependency_list" sequence="1" parent="personal.new_users"
+                  action="person_depends_action_window"/>
+    </data>
+
+</odoo>

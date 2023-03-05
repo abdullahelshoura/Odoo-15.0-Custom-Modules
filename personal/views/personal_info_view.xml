@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--++++++++| Personal Info Tree View|++++++++++++-->
+    <record model="ir.ui.view" id="personal_info_tree">
+        <field name="name">personal.info.tree</field>
+        <field name="model">personal.info</field>
+        <field name="arch" type="xml">
+            <tree class="text-center">
+                <field name="ref"/>
+                <field name="name"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="birthdate"/>
+                <field name="tags" widget="many2many_tags" options="{'color_field' : 'color'}"/>
+            </tree>
+        </field>
+    </record>
+    <!--    ================================================================-->
+    <!--++++++++| Personal Info From View|++++++++++++-->
+    <record model="ir.ui.view" id="personal_info_form">
+        <field name="name">personal.info.form</field>
+        <field name="model">personal.info</field>
+        <field name="arch" type="xml">
+            <form edit="">
+                <header>
+                    <button name="create_journal" string="Create Journal" type="object" states="sale_order"
+                            class="oe_highlight"/>
+                    <button name="return_journal" string="Journal Entry"
+                            type="object" states="done"
+                            class="oe_highlight"/>
+                    <button name="cancel_journal" string="Cancel Journal"
+                            type="object" states="done"
+                            class=""/>
+
+
+                    <field name="state" widget="statusbar" nolabel="1"
+                           statusbar_visible="sale_order,done"/>
+                </header>
+                <sheet>
+                    <!--Smart Button-->
+                    <div class="oe_button_box" name="button_box" position="inside">
+                        <button name="action_view_orders" type="object"
+                                class="oe_stat_button" icon="fa-usd">
+                            <field string="Purchase" name="sale_order_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <field widget="image" name="image_1920" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <h4>
+                            <field name="ref" readonly="1"/>
+                        </h4>
+                        <h2>
+                            <label for="name" string="Name" class="oe_edit_only" default_focus="1"/>
+                            <field name="name"/>
+                            <field class="oe_edit_only" placeholder="Company Name" widget="res_partner_many2one"
+                                   name="parent_id"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="title"/>
+                            <field name="gender"/>
+                            <field name="birthdate"/>
+                            <field name="age"/>
+
+                            <span class="o_form_label o_td_label" name="address_name">
+                                <b>Address</b>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_city oe_edit_only"/>
+                                <field name="state_id" class="o_address_state oe_edit_only" placeholder="State"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip oe_edit_only"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country oe_edit_only"/>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="website"/>
+                            <field name="tags" widget="many2many_tags" options="{'color_field' : 'color'}"/>
+                            <field name="hide_depends_age" class="oe_edit_only"/>
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="My Dept">
+                            <group col="6">
+                                <field name="debt" string="Debt" col="2"/>
+                                <field name="total_orders_amount" string="Purchases" col="2"/>
+                                <field name="total_amount" string="Total Debt Amount" col="2"/>
+                            </group>
+                            <group>
+                                <group>
+                                    <field class="oe_edit_only" name="debit_account_id"/>
+                                </group>
+                                <group>
+                                    <field class="oe_edit_only" name="credit_account_id"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Dependencies">
+                            <field name="depends_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="age"
+                                           attrs="{'column_invisible': [('parent.hide_depends_age', '=', True)]}"/>
+                                    <field name="relationship"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!--    ================================================================-->
+    <!--    Personal Info Search View (Control Panel)-->
+    <record model="ir.ui.view" id="personal_info_search">
+        <field name="name">personal.info.search</field>
+        <field name="model">personal.info</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="User Name"/>
+                <field name="ref" string="Reference"/>
+                <field name="age" string="Age"/>
+                <field name="gender" string="Gender"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_gender" string="Gender" domain="[]" context="{'group_by':'gender'}"/>
+                </group>
+                <searchpanel>
+                    <field name="gender" select="multi" enable_counters="1" icon="fa-users"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <!--    ================================================================-->
+    <!--***************|View Action|*******************-->
+    <record model="ir.actions.act_window" id="personal_info_action_window">
+        <field name="name">New Users List</field>
+        <field name="res_model">personal.info</field>
+        <field name="view_mode">tree,form,search</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create Your First
+            </p>
+        </field>
+
+    </record>
+    <!--++++++++| Submenu |++++++++++++-->
+    <data>
+        <menuitem name="New Users List" id="new_users_list" sequence="0" parent="personal.new_users"
+                  action="personal_info_action_window"/>
+    </data>
+
+</odoo>

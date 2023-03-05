@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- Sequences for Persons List -->
+    <record id="seq_personal_info" model="ir.sequence">
+        <field name="name">New Users Sequence</field>
+        <field name="code">personal.info</field>
+        <field name="prefix">USER</field>
+        <!--padding is the number of zeros will be used in ref sequential number-->
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <!-- Sequences for Dependencies -->
+    <record id="seq_person_dependencies" model="ir.sequence">
+        <field name="name">Dependencies</field>
+        <field name="code">person.depends</field>
+        <field name="prefix">DP</field>
+        <!--padding is the number of zeros will be used in ref sequential number-->
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,35 @@
+<odoo>
+
+    <!--++++++++|Form View|++++++++++++-->
+    <record model="ir.ui.view" id="cancel_journal_view_form">
+        <field name="name">cancel.journal.wizard.form</field>
+        <field name="model">cancel.journal.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="move_id"/>
+                </group>
+                <group>
+                </group>
+                <footer>
+                    <button name="action_cancel" type="object" string="Cancel Journal" />
+                    <button special="cancel" string="Discard" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--++++++++|Form View|++++++++++++-->
+    <record model="ir.actions.act_window" id="cancel_journal_action_window">
+        <field name="name">Cancel Journal</field>
+        <field name="res_model">cancel.journal.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+
+    </record>
+    <data>
+        <menuitem name="Cancel Journal" id="cancel_journal_menu" parent="personal.configuration"
+                  action="cancel_journal_action_window"/>
+    </data>
+
+</odoo>
